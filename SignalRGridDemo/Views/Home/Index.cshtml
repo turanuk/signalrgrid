@@ -1,6 +1,7 @@
 ﻿<h1>Employees</h1>
 
-<table class="table">
+<div class="loadingIndicator" data-bind="visible: loading()"></div>
+<table class="table" data-bind="visible: !loading()">
   <thead>
     <tr>
       <th>Name</th>
