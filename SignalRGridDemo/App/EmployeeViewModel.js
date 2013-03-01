@@ -2,7 +2,17 @@
   var self = this;
   self.employees = ko.observableArray();
   self.loading = ko.observable(true);
+  self.displayMode = function (employee) {
+    return employee.Edit() ? 'edit-template' : 'read-template';
+  }
 
+  self.edit = function (employee) {
+    employee.Edit(true);
+  }
+
+  self.done = function (employee) {
+    employee.Edit(false);
+  }
 
   self.watchModel = function (model, callback) {
     for (var key in model) {
@@ -39,6 +49,7 @@
         Name: ko.observable(employee.Name),
         Email: ko.observable(employee.Email),
         Salary: ko.observable(employee.Salary),
+        Edit: ko.observable(false)
       }
       self.watchModel(obsEmployee, self.modelChanged);
       return obsEmployee;

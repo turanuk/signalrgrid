@@ -4,23 +4,33 @@
 <table class="table" data-bind="visible: !loading()">
   <thead>
     <tr>
+      <th>Action</th>
       <th>Name</th>
       <th>Email</th>
       <th>Salary</th>
     </tr>
   </thead>
   <tbody data-bind="foreach: employees">
-    <tr data-bind="template: { name : 'edit-template', data: $data}"></tr>
+    <tr data-bind="template: { name : $root.displayMode, data: $data}"></tr>
   </tbody>
 </table>
 
 <script type="text/html" id="read-template">
+  <td><a href="#" class="btn" data-bind="click: $root.edit">Edit</a></td>
+  <td data-bind="text: Name"></td>
+  <td data-bind="text: Email"></td>
+  <td data-bind="displayMoney: Salary"></td>
+</script>
+
+<script type="text/html" id="lock-template">
+  <td><div class="btn btn-danger">Locked</div></td>
   <td data-bind="text: Name"></td>
   <td data-bind="text: Email"></td>
   <td data-bind="displayMoney: Salary"></td>
 </script>
 
 <script type="text/html" id="edit-template">
+  <td><a href="#" class="btn btn-success" data-bind="click: $root.done">Done</a></td>
   <td><input type="text" data-bind="value: Name"/></td>
   <td><input type="text" data-bind="value: Email"/></td>
   <td><input type="text" data-bind="value: Salary"/></td>
