@@ -14,3 +14,7 @@
 *.dll
 *.pdb
 *.cache
+
+# databases
+*.mdf
+*.ldf
