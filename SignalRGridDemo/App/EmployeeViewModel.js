@@ -48,5 +48,22 @@
 }
 
 $(function () {
-  ko.applyBindings(new EmployeeViewModel());
+  var employeeSignalR = $.connection.employee;
+  var viewModel = new EmployeeViewModel();
+
+  var findEmployee = function (id) {
+    return ko.utils.arrayFirst(viewModel.employees(), function (item) {
+      if (item.Id == id) {
+        return item;
+      }
+    });
+  }
+
+  employeeSignalR.client.updatedEmployee = function (id, key, value) {
+    var employee = findEmployee(id);
+    employee[key](value);
+  }
+
+  ko.applyBindings(viewModel);
+  $.connection.hub.start();
 });

@@ -10,9 +10,11 @@ using System.Web;
 using System.Web.Http;
 using SignalRGridDemo.Models;
 using System.Web.Http.OData;
+using SignalRGridDemo.Hubs;
+using SignalrGrid.WebApi;
 
 namespace SignalRGridDemo.Controllers {
-  public class EmployeesController : EntitySetController<Employee, int> {
+  public class EmployeesController : EntitySetControllerWithHub<EmployeeHub> {
     private SignalRGridDemoContext db = new SignalRGridDemoContext();
 
     [Queryable]
@@ -29,6 +31,13 @@ namespace SignalRGridDemo.Controllers {
       patch.Patch(employeeToPatch);
       db.Entry(employeeToPatch).State = EntityState.Modified;
       db.SaveChanges();
+
+      var changedProperty = patch.GetChangedPropertyNames().ToList()[0];
+      object changedPropertyValue;
+      patch.TryGetPropertyValue(changedProperty, out changedPropertyValue);
+
+      Hub.Clients.All.updatedEmployee(employeeToPatch.Id, changedProperty, changedPropertyValue);
+
       return employeeToPatch;
     }
 
