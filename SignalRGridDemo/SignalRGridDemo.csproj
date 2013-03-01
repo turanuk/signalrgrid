@@ -191,6 +191,10 @@
     <Compile Include="Migrations\201303012107487_InitialCreate.Designer.cs">
       <DependentUpon>201303012107487_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303012305348_AddLockedProperty.cs" />
+    <Compile Include="Migrations\201303012305348_AddLockedProperty.Designer.cs">
+      <DependentUpon>201303012305348_AddLockedProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\SignalRGridDemoContext.cs" />
@@ -337,6 +341,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201303012107487_InitialCreate.resx">
       <DependentUpon>201303012107487_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303012305348_AddLockedProperty.resx">
+      <DependentUpon>201303012305348_AddLockedProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

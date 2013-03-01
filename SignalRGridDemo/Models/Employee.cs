@@ -9,5 +9,6 @@ namespace SignalRGridDemo.Models {
     public string Name { get; set; }
     public string Email { get; set; }
     public float Salary { get; set; }
+    public bool Locked { get; set; }
   }
 }
