@@ -21,13 +21,19 @@
   }
 
   self.modelChanged = function (model, key, val) {
-    alert(model.Id);
-    alert(key);
-    alert(val);
+    var payload = {};
+    payload[key] = val;
+    $.ajax({
+      url: '/odata/Employees(' + model.Id + ')',
+      type: 'PATCH',
+      data: JSON.stringify(payload),
+      contentType: 'application/json',
+      dataType: 'json'
+    });
   }
 
-  $.getJSON('api/employee', function (data) {
-    self.employees(ko.utils.arrayMap(data, function (employee) {
+  $.getJSON('odata/Employees', function (data) {
+    self.employees(ko.utils.arrayMap(data.value, function (employee) {
       var obsEmployee = {
         Id: employee.Id,
         Name: ko.observable(employee.Name),
