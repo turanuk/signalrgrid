@@ -1,3 +1,23 @@
-﻿<h1>Bootstrap starter template</h1>
-<p>Use this document as a way to quick start any new project.<br>
-  All you get is this message and a barebones HTML document.</p>
+﻿<h1>Employees</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Salary</th>
+    </tr>
+  </thead>
+  <tbody data-bind="foreach: employees">
+    <tr>
+      <td data-bind="text: Name"></td>
+      <td data-bind="text: Email"></td>
+      <td data-bind="text: Salary"></td>
+    </tr>
+  </tbody>
+</table>
+
+@section scripts {
+  <script src="~/Scripts/knockout-2.2.0.js"></script>
+  <script src="~/App/EmployeeViewModel.js"></script>
+}
