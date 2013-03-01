@@ -17,6 +17,7 @@ namespace SignalRGridDemo.Hubs {
 
     public override Task OnConnected() {
       _mapping.TryAdd(Context.ConnectionId, new List<int>());
+      Clients.All.newConnection(Context.ConnectionId);
       return base.OnConnected();
     }
 

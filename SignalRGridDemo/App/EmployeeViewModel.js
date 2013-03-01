@@ -9,6 +9,7 @@
       return employee.Edit() ? 'edit-template' : 'read-template';
     }
   }
+  self.connected = ko.observable('');
 
   self.edit = function (employee) {
     employee.Edit(true);
@@ -90,6 +91,10 @@ $(function () {
   employeeSignalR.client.unlockEmployee = function (id) {
     var employee = findEmployee(id);
     employee.Locked(false);
+  }
+
+  employeeSignalR.client.newConnection = function (id) {
+    viewModel.connected(id + ' connected.');
   }
 
   ko.applyBindings(viewModel);
