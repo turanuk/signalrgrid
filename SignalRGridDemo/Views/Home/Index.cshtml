@@ -13,12 +13,13 @@
     <tr>
       <td data-bind="text: Name"></td>
       <td data-bind="text: Email"></td>
-      <td data-bind="text: Salary"></td>
+      <td data-bind="displayMoney: Salary"></td>
     </tr>
   </tbody>
 </table>
 
 @section scripts {
   <script src="~/Scripts/knockout-2.2.0.js"></script>
+  <script src="~/App/CustomBindings.js"></script>
   <script src="~/App/EmployeeViewModel.js"></script>
 }
