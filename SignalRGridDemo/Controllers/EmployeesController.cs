@@ -26,6 +26,10 @@ namespace SignalRGridDemo.Controllers {
       return db.Employees.Find(key);
     }
 
+    protected override int GetKey(Employee entity) {
+      return entity.Id;
+    }
+
     protected override Employee PatchEntity(int key, Delta<Employee> patch) {
       Employee employeeToPatch = db.Employees.Find(key);
       patch.Patch(employeeToPatch);
@@ -39,6 +43,22 @@ namespace SignalRGridDemo.Controllers {
       Hub.Clients.All.updatedEmployee(employeeToPatch.Id, changedProperty, changedPropertyValue);
 
       return employeeToPatch;
+    }
+
+    protected override Employee CreateEntity(Employee entity) {
+      var newEmployee = db.Employees.Add(entity);
+      db.SaveChanges();
+
+      Hub.Clients.All.addEmployee(newEmployee);
+      return newEmployee;
+    }
+
+    public override void Delete(int key) {
+      var employeeToDelete = db.Employees.Find(key);
+      db.Employees.Remove(employeeToDelete);
+      db.SaveChanges();
+
+      Hub.Clients.All.removeEmployee(key);
     }
 
     protected override void Dispose(bool disposing) {

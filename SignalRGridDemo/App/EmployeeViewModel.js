@@ -11,6 +11,26 @@
   }
   self.connected = ko.observable('');
 
+  self.add = function () {
+    var payload = { Name: "New", Email: "New", Salary: 1 };
+    $.ajax({
+      url: '/odata/Employees',
+      type: 'POST',
+      data: JSON.stringify(payload),
+      contentType: 'application/json',
+      dataType: 'json'
+    });
+  }
+
+  self.remove = function (employee) {
+    $.ajax({
+      url: '/odata/Employees(' + employee.Id + ')',
+      type: 'DELETE',
+      contentType: 'application/json',
+      dataType: 'json'
+    });
+  }
+
   self.edit = function (employee) {
     employee.Edit(true);
     signalRContext.server.lock(employee.Id);
@@ -76,6 +96,23 @@ $(function () {
         return item;
       }
     });
+  }
+
+  employeeSignalR.client.addEmployee = function (employee) {
+    var obsEmployee = {
+      Id: employee.Id,
+      Name: ko.observable(employee.Name),
+      Email: ko.observable(employee.Email),
+      Salary: ko.observable(employee.Salary),
+      Edit: ko.observable(false),
+      Locked: ko.observable(employee.Locked)
+    }
+    viewModel.employees.push(obsEmployee);
+    viewModel.watchModel(obsEmployee, viewModel.modelChanged);
+  }
+
+  employeeSignalR.client.removeEmployee = function (id) {
+    viewModel.employees.remove(function (item) { return item.Id == id });
   }
 
   employeeSignalR.client.updatedEmployee = function (id, key, value) {

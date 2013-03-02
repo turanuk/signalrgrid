@@ -1,7 +1,8 @@
 ﻿<h1>Employees</h1>
 
-<div data-bind="text: connected"></div>
+<p data-bind="text: connected"></p>
 <div class="loadingIndicator" data-bind="visible: loading()"></div>
+<a class="btn btn-success" data-bind="click: add, visible: !loading()">Add</a>
 <table class="table" data-bind="visible: !loading()">
   <thead>
     <tr>
@@ -17,7 +18,10 @@
 </table>
 
 <script type="text/html" id="read-template">
-  <td><a href="#" class="btn" data-bind="click: $root.edit">Edit</a></td>
+  <td>
+    <a href="#" class="btn" data-bind="click: $root.edit">Edit</a>
+    <a href="#" class="btn btn-warning" data-bind="click: $root.remove">Del</a>
+  </td>
   <td data-bind="text: Name"></td>
   <td data-bind="text: Email"></td>
   <td data-bind="displayMoney: Salary"></td>
