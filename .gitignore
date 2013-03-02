@@ -10,7 +10,6 @@
 */obj/*
 */*/obj/*
 
-# generated binaries
-*.dll
-*.pdb
-*.cache
+# databases
+*.mdf
+*.ldf
