@@ -31,17 +31,21 @@ namespace SignalRGridDemo.Hubs {
     }
 
     public void Unlock(int id) {
+      UnlockHelper(id);
+      _mapping[Context.ConnectionId].Remove(id);
+    }
+
+    private void UnlockHelper(int id) {
       var employeeToPatch = db.Employees.Find(id);
       employeeToPatch.Locked = false;
       db.Entry(employeeToPatch).State = EntityState.Modified;
       db.SaveChanges();
       Clients.Others.unlockEmployee(id);
-      _mapping[Context.ConnectionId].Remove(id);
     }
 
     public override Task OnDisconnected() {
       foreach (var id in _mapping[Context.ConnectionId]) {
-        Unlock(id);
+        UnlockHelper(id);
       }
       var list = new List<int>();
       _mapping.TryRemove(Context.ConnectionId, out list);
