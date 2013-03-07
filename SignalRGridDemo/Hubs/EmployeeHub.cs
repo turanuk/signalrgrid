@@ -40,7 +40,11 @@ namespace SignalRGridDemo.Hubs {
 
     public override Task OnDisconnected() {
       foreach (var id in _mapping[Context.ConnectionId]) {
-        Unlock(id);
+        var employeeToPatch = db.Employees.Find(id);
+        employeeToPatch.Locked = false;
+        db.Entry(employeeToPatch).State = EntityState.Modified;
+        db.SaveChanges();
+        Clients.Others.unlockEmployee(id);
       }
       var list = new List<int>();
       _mapping.TryRemove(Context.ConnectionId, out list);
